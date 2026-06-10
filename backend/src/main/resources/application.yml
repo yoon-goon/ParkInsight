@@ -27,7 +27,7 @@ app:
 gemini:
   api-key: ${GEMINI_API_KEY:}
   chat-model: gemini-3.1-flash-lite
-  embedding-model: gemini-embedding-2
+  embedding-model: gemini-embedding-001
 
 weather:
   api-key: ${WEATHER_API_KEY:}
