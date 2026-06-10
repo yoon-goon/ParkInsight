@@ -39,8 +39,8 @@
 ### AI / RAG
 | 항목 | 기술 |
 |------|------|
-| Vision & Chat | Google Gemini 1.5 Pro (multimodal) |
-| Embedding | Google text-embedding-004 |
+| Vision & Chat | Google Gemini 2.5 Flash (multimodal) |
+| Embedding | Google gemini-embedding-001 (3072d) |
 | RAG Framework | LangChain4j |
 | Vector DB | Qdrant |
 
@@ -76,7 +76,7 @@
   └────────┘ └───────────┬──────────┘
                          │ Semantic Search
              ┌───────────┴──────────┐
-             │  Gemini 1.5 Pro      │
+             │  Gemini 2.5 Flash    │
              │  (Vision + Chat)     │
              └──────────────────────┘
                          │
@@ -222,7 +222,7 @@ Content-Type: application/json
 
 ### Prerequisites
 - Docker Desktop
-- JDK 21
+- JDK 17
 - Node.js 20+
 - Maven 3.9+
 
@@ -256,7 +256,7 @@ cd backend
 ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-DDDL_AUTO=create"
 
 # RAG 문서 ingestion (최초 1회)
-./mvnw spring-boot:run -Dspring.profiles.active=ingest
+./mvnw spring-boot:run "-Dspring-boot.run.profiles=ingest"
 
 # 이후 실행
 ./mvnw spring-boot:run
