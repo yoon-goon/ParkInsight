@@ -4,6 +4,13 @@
 
 차량 4면 사진을 업로드하면 Gemini Vision이 외관 상태를 진단하고, 날씨 데이터 및 RAG 기반 차량 관리 지식을 결합해 맞춤형 주차/세차 리포트를 생성합니다.
 
+## Live Demo
+
+| 서비스 | URL |
+|--------|-----|
+| 웹 앱 | https://park-insight.vercel.app |
+| API 서버 | https://parkinsight-production.up.railway.app |
+
 ---
 
 ## Features
@@ -39,7 +46,7 @@
 ### AI / RAG
 | 항목 | 기술 |
 |------|------|
-| Vision & Chat | Google Gemini 2.5 Flash (multimodal) |
+| Vision & Chat | Google gemini-3.1-flash-lite (multimodal) |
 | Embedding | Google gemini-embedding-001 (3072d) |
 | RAG Framework | LangChain4j |
 | Vector DB | Qdrant |
@@ -76,7 +83,7 @@
   └────────┘ └───────────┬──────────┘
                          │ Semantic Search
              ┌───────────┴──────────┐
-             │  Gemini 2.5 Flash    │
+             │  gemini-3.1-flash-lite│
              │  (Vision + Chat)     │
              └──────────────────────┘
                          │
