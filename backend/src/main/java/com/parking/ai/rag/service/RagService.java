@@ -35,6 +35,12 @@ public class RagService {
                     .build();
 
             Embedding queryEmbedding = embeddingModel.embed(query).content();
+
+            if (queryEmbedding == null || queryEmbedding.vector().length == 0) {
+                log.warn("임베딩 결과가 비어있습니다. 모델: {}", embeddingModelName);
+                return "";
+            }
+
             List<EmbeddingMatch<TextSegment>> matches = embeddingStore.findRelevant(queryEmbedding, 3);
 
             return matches.stream()
