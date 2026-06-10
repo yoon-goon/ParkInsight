@@ -23,6 +23,8 @@ public class AnalysisController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<AnalysisResponse>> analyze(
             @RequestParam("vehicleId") Long vehicleId,
+            @RequestParam(value = "lat", defaultValue = "37.5665") double lat,
+            @RequestParam(value = "lon", defaultValue = "126.9780") double lon,
             @RequestPart("front") MultipartFile front,
             @RequestPart("rear") MultipartFile rear,
             @RequestPart("left") MultipartFile left,
@@ -30,7 +32,7 @@ public class AnalysisController {
             @AuthenticationPrincipal UserDetails userDetails) {
         Long userId = Long.parseLong(userDetails.getUsername());
         return ResponseEntity.ok(ApiResponse.ok(
-                analysisService.analyze(userId, vehicleId, front, rear, left, right)));
+                analysisService.analyze(userId, vehicleId, lat, lon, front, rear, left, right)));
     }
 
     @GetMapping("/{id}")

@@ -32,13 +32,28 @@ export default function NewAnalysis() {
 
     const allUploaded = Object.values(images).every(Boolean);
 
+    const getLocation = () => new Promise((resolve) => {
+        if (!navigator.geolocation) {
+            resolve({ lat: 37.5665, lon: 126.9780 });
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+            () => resolve({ lat: 37.5665, lon: 126.9780 }),
+            { timeout: 5000 }
+        );
+    });
+
     const handleSubmit = async () => {
         if (!vehicleId || !allUploaded) return;
         setLoading(true);
         setError(null);
         try {
+            const { lat, lon } = await getLocation();
             const formData = new FormData();
             formData.append('vehicleId', vehicleId);
+            formData.append('lat', lat);
+            formData.append('lon', lon);
             formData.append('front', images.front);
             formData.append('rear', images.rear);
             formData.append('left', images.left);

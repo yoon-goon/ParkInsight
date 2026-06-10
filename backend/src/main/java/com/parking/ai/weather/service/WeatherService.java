@@ -24,12 +24,12 @@ public class WeatherService {
     private String baseUrl;
 
     @Value("${weather.lat}")
-    private double lat;
+    private double defaultLat;
 
     @Value("${weather.lon}")
-    private double lon;
+    private double defaultLon;
 
-    public WeatherInfo getCurrentWeather() {
+    public WeatherInfo getCurrentWeather(double lat, double lon) {
         try {
             Map<?, ?> forecast = webClient.get()
                     .uri(baseUrl + "/forecast?lat={lat}&lon={lon}&appid={key}&units=metric&cnt=8&lang=kr",

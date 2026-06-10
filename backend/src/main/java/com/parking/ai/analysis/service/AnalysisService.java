@@ -39,7 +39,7 @@ public class AnalysisService {
     private final ObjectMapper objectMapper;
 
     @Transactional
-    public AnalysisResponse analyze(Long userId, Long vehicleId,
+    public AnalysisResponse analyze(Long userId, Long vehicleId, double lat, double lon,
                                      MultipartFile front, MultipartFile rear,
                                      MultipartFile left, MultipartFile right) {
         Vehicle vehicle = vehicleRepository.findByIdAndUserId(vehicleId, userId)
@@ -55,7 +55,7 @@ public class AnalysisService {
         VisionAnalysisResult vision = geminiVisionService.analyze(
                 List.of(frontUrl, rearUrl, leftUrl, rightUrl));
 
-        WeatherInfo weather = weatherService.getCurrentWeather();
+        WeatherInfo weather = weatherService.getCurrentWeather(lat, lon);
         String weatherJson = serializeWeather(weather);
 
         String ragQuery = String.format("%s %d년식 오염:%s 스크래치:%s 주차:%s",
