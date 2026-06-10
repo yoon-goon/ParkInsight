@@ -34,7 +34,15 @@ public class RagService {
                     .modelName(embeddingModelName)
                     .build();
 
-            Embedding queryEmbedding = embeddingModel.embed(query).content();
+            Embedding queryEmbedding;
+            try {
+                var response = embeddingModel.embed(query);
+                queryEmbedding = response.content();
+                log.info("임베딩 완료: 차원={}, 모델={}", queryEmbedding == null ? "null" : queryEmbedding.vector().length, embeddingModelName);
+            } catch (Exception e) {
+                log.warn("임베딩 API 호출 실패: {} - {}", e.getClass().getSimpleName(), e.getMessage());
+                return "";
+            }
 
             if (queryEmbedding == null || queryEmbedding.vector().length == 0) {
                 log.warn("임베딩 결과가 비어있습니다. 모델: {}", embeddingModelName);
