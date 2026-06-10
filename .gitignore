@@ -1,0 +1,34 @@
+# Environment
+.env
+.env.local
+
+# Backend
+backend/target/
+backend/.mvn/
+backend/*.log
+*.class
+*.jar
+*.war
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spring Boot
+backend/src/main/resources/application-local.yml
+
+# Claude Code
+.claude/
