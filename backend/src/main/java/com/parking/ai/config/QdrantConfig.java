@@ -21,17 +21,29 @@ public class QdrantConfig {
     @Value("${qdrant.port}")
     private int port;
 
+    @Value("${qdrant.api-key:}")
+    private String apiKey;
+
+    @Value("${qdrant.tls:false}")
+    private boolean tls;
+
     @Value("${qdrant.collection-name}")
     private String collectionName;
 
     @Value("${qdrant.dimension}")
     private int dimension;
 
+    private QdrantGrpcClient buildGrpcClient() {
+        QdrantGrpcClient.Builder builder = QdrantGrpcClient.newBuilder(host, port, tls);
+        if (apiKey != null && !apiKey.isBlank()) {
+            builder.withApiKey(apiKey);
+        }
+        return builder.build();
+    }
+
     @Bean
     public QdrantClient qdrantClient() {
-        return new QdrantClient(
-                QdrantGrpcClient.newBuilder(host, port, false).build()
-        );
+        return new QdrantClient(buildGrpcClient());
     }
 
     @Bean
@@ -44,8 +56,7 @@ public class QdrantConfig {
 
     @PostConstruct
     public void initCollection() {
-        try (QdrantClient client = new QdrantClient(
-                QdrantGrpcClient.newBuilder(host, port, false).build())) {
+        try (QdrantClient client = new QdrantClient(buildGrpcClient())) {
 
             boolean exists = client.listCollectionsAsync().get()
                     .stream().anyMatch(c -> c.equals(collectionName));

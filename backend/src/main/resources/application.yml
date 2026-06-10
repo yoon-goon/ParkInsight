@@ -43,5 +43,7 @@ cloudinary:
 qdrant:
   host: ${QDRANT_HOST:localhost}
   port: ${QDRANT_PORT:6334}
+  api-key: ${QDRANT_API_KEY:}
+  tls: ${QDRANT_TLS:false}
   collection-name: parkinsight-docs
   dimension: 3072
